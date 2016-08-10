@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="box">
+    <div class="box-body">
+        <table id="order-list" class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Order Number</th>
+                    <th>Quantity</th>
+                    <th>Customer</th>
+                    <th>Country</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_local %}
+<script type="text/javascript">
+    $(function(){
+        $('#order-list').DataTable({
+            "autoWidth": true,
+            "ajax": {
+                "url": "/orders/ajax",
+                "type": "POST",
+                "contentType": "application/json",
+                "headers": {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+            },
+            "columns": [
+                {"data": "id"},
+                {"data": "name"},
+                {"data": "order_number"},
+                {"data": "quantity"},
+                {"data": "customer"},
+                {"data": "country"},
+                {"data": "date"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [-1],
+                    "render": function(data, type, row) {
+                        return (new Date(data)).toString();
+                    }
+                }
+            ]
+        });
+    });
+</script>
+{% endblock %}
