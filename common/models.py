@@ -16,6 +16,8 @@ class VisualFormFactor(models.Model):
 
 class BusinessCategory(models.Model):
     name = models.CharField(max_length=20)
+    class Meta:
+        verbose_name_plural = "business categories"
     def __str__(self):
         return self.name
 
