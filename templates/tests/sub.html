@@ -1,0 +1,22 @@
+{% extends "tests/base.html" %}
+
+{% block title %}My amazing blog{% endblock %}
+
+{% block sidebar %}
+<ul>
+    <li>I am sub</li>
+    <li>Nothing</li>
+</ul>
+{% endblock %}
+
+{% block content %}
+{% for entry in blog_entries %}
+    <h2>{{ entry.title }}</h2>
+    <p>{{ entry.body }}</p>
+{% endfor %}
+
+<p>
+{{ request.path }}
+</p>
+
+{% endblock %}

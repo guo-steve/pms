@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+{% load i18n %}<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>{% block title %}{% endblock %}</title>
+  <title>{% block title %}{{ title }} | {{ site_title|default:_("PMS V1.0") }}{% endblock %}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -19,9 +19,10 @@
         apply the skin class to the body tag so the changes take effect.
   -->
   <link rel="stylesheet" href="/static/dist/css/skins/skin-blue.min.css">
+  {% block datatable_style %}
   <!-- dataTable plugins -->
   <link rel="stylesheet" href="/static/plugins/datatables/dataTables.bootstrap.css">
-
+  {% endblock %}
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -29,6 +30,7 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
+{% comment "Body Tag Option" %}
 <!--
 BODY TAG OPTIONS:
 =================
@@ -49,9 +51,11 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
+{% endcomment %}
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
+  {% block main_header %}
   <!-- Main Header -->
   <header class="main-header">
 
@@ -220,6 +224,9 @@ desired effect
       </div>
     </nav>
   </header>
+  {% endblock %}
+
+  {% block main_sidebar %}
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
 
@@ -254,9 +261,9 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">MENU</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#"><i class="fa fa-home"></i> <span>Home</span></a></li>
-        <li><a href="#"><i class="fa fa-money"></i> <span>Orders</span></a></li>
-        <li><a href="#"><i class="fa fa-cubes"></i> <span>Projects</span></a></li>
+        <li class="{% if request.path == '/' %}active{% endif %}"><a href="/"><i class="fa fa-home"></i> <span>Home</span></a></li>
+        <li class="{% if request.path|slice:':7' == '/orders' %}active{% endif %}"><a href="/orders"><i class="fa fa-money"></i> <span>Orders</span></a></li>
+        <li class="{% if request.path|slice:':9' == '/projects' %}active{% endif %}"><a href="/projects"><i class="fa fa-cubes"></i> <span>Projects</span></a></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
             <span class="pull-right-container">
@@ -273,14 +280,16 @@ desired effect
     </section>
     <!-- /.sidebar -->
   </aside>
+  {% endblock %}
 
+  {% block content_wrapper %}
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Header
-        <small>Optional description</small>
+        {{ page_header|default:'`page_header` not assigned' }}
+        <small>{{ page_description|default:'`page_description` not assigned' }}</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -298,7 +307,9 @@ desired effect
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+  {% endblock %}
 
+  {% block footer %}
   <!-- Main Footer -->
   <footer class="main-footer">
     <!-- To the right -->
@@ -308,7 +319,9 @@ desired effect
     <!-- Default to the left -->
     <strong>Copyright &copy; 2016 <a href="#">SteveStudio</a>.</strong> All rights reserved.
   </footer>
+  {% endblock %}
 
+  {% block control_sidebar %}
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->
@@ -385,6 +398,7 @@ desired effect
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
+  {% endblock %}
 </div>
 <!-- ./wrapper -->
 
