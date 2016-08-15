@@ -54,6 +54,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pms.middlewares.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'pms.urls'
@@ -137,3 +138,11 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+
+SESSION_COOKIE_AGE = 86400
+
+LOGIN_EXEMPT_URLS = (
+    r'^admin/',
+    r'^hello',
+    r'^test',
+)
