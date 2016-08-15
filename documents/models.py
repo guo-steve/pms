@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import os
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils import timezone
 from django.contrib.auth.models import User
 from customers.models import Operator
 
@@ -28,7 +27,7 @@ class Document(models.Model):
     customer = models.ForeignKey(Operator, on_delete=models.PROTECT)
     file = models.FileField(upload_to=get_doc_path)
     active = models.BooleanField(default=True)
-    update_date = models.DateTimeField(null=True, blank=True)
-    creation_date = models.DateTimeField(default=timezone.now, editable=False)
+    update_date = models.DateTimeField(auto_now=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return '{0}({1})'.format(self.name, self.code)

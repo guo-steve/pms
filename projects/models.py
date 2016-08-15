@@ -2,7 +2,6 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils import timezone
 from common.models import MeterialsDescription, VisualFormFactor, BusinessCategory
 from documents.models import Document
 from products.models import ProductType, Product
@@ -19,8 +18,8 @@ class Project(models.Model):
     business_category = models.ForeignKey(BusinessCategory, on_delete=models.PROTECT)
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     documents = models.ManyToManyField(Document)
-    update_date = models.DateTimeField(null=True, blank=True)
-    creation_date = models.DateTimeField(default=timezone.now, editable=False)
+    update_date = models.DateTimeField(auto_now=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.code + self.name
 

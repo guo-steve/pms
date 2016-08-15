@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import os
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils import timezone
 from common.models import BusinessCategory
 
 def get_file_path(instance, filename):
@@ -23,6 +22,6 @@ class Product(models.Model):
     business_category = models.ForeignKey(BusinessCategory, on_delete=models.PROTECT)
     instruction_file = models.FileField(upload_to=get_file_path)
     active = models.BooleanField(default=True)
-    creation_date = models.DateTimeField(default=timezone.now, editable=False)
+    creation_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.name
