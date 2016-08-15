@@ -22,7 +22,8 @@ def index(request):
         pass
     else:
         context = {
-            'title' : 'Orders'
+            'title' : 'Orders',
+            'page_header' : 'Orders list'
         }
         return render(request, 'orders/index.html', context)
 

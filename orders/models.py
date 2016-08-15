@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
 import os
+from datetime import date
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
-from django.utils import timezone
 from customers.models import Operator
 
 def get_file_path(instance, filename):
@@ -17,8 +17,8 @@ class Order(models.Model):
     description = models.TextField()
     quantity = models.IntegerField()
     original_file = models.FileField(upload_to=get_file_path)
-    updated_date = models.DateTimeField(null=True, blank=True)
-    creation_date = models.DateTimeField(default=timezone.now, editable=False)
+    updated_date = models.DateTimeField(auto_now=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.name
 
@@ -26,7 +26,7 @@ class DataBatch(models.Model):
     batch_number = models.CharField(max_length=10)
     order = models.ForeignKey(Order, on_delete=models.PROTECT)
     quantity = models.IntegerField()
-    publish_date = models.DateTimeField(default=timezone.now, editable=False)
+    publish_date = models.DateField(default=date.today)
     class Meta:
         verbose_name_plural = "data batches"
     def country(self):
