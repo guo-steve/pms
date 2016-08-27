@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="box">
+    <div class="box-body">
+        <table id="order-list" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Country</th>
+                    <th>Batch Number</th>
+                    <th>Quantity</th>
+                    <th>Order</th>
+                    <th>Publish Date</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_local %}
+<script type="text/javascript">
+    $(function(){
+        $('#order-list').DataTable({
+            "autoWidth": false,
+            "ajax": {
+                "url": "{% url 'data_batches:ajax' %}",
+                "type": "POST",
+                "contentType": "application/json",
+                "headers": {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+            },
+            "columns": [
+                {"data": "id"},
+                {"data": "country"},
+                {"data": "batch_number"},
+                {"data": "quantity"},
+                {"data": "order"},
+                {"data": "publish_date"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": [-1],
+                    "render": function(data, type, row) {
+                        return (new Date(data)).toLocaleString();
+                    }
+                }
+            ]
+        });
+    });
+</script>
+{% endblock %}

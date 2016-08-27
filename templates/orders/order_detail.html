@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="box">
+    <div class="box-body">
+        <table id="order-detail" class="table table-hover">
+            <tbody>
+                <tr>
+                    <td><b>Order ID</b></td>
+                    <td>{{ order.id }}</td>
+                </tr>
+                <tr>
+                    <td><b>Order Name</b></td>
+                    <td>{{ order.name }}</td>
+                </tr>
+                <tr>
+                    <td><b>Order Number</b></td>
+                    <td>{{ order.order_number }}</td>
+                </tr>
+                <tr>
+                    <td><b>Description</b></td>
+                    <td>{{ order.description }}</td>
+                </tr>
+                <tr>
+                    <td><b>Quantity</b></td>
+                    <td>{{ order.quantity }}</td>
+                </tr>
+                <tr>
+                    <td><b>Customer Name</b></td>
+                    <td>{{ order.customer.name }}</td>
+                </tr>
+                <tr>
+                    <td><b>Original File</b></td>
+                    <td>{{ order.original_file }}</td>
+                </tr>
+                <tr>
+                    <td><b>Updated Date</b></td>
+                    <td>{{ order.updated_date }}</td>
+                </tr>
+                <tr>
+                    <td><b>Creation Date</b></td>
+                    <td>{{ order.creation_date }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
