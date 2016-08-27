@@ -8,7 +8,7 @@ from customers.models import Operator
 
 def get_file_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/orders/<code><ext>
-    return os.path.join('products', instance.name + os.path.splitext(filename)[1])
+    return os.path.join('orders', instance.name + os.path.splitext(filename)[1])
 
 class Order(models.Model):
     name = models.CharField(max_length=30)
@@ -30,7 +30,7 @@ class DataBatch(models.Model):
     class Meta:
         verbose_name_plural = "data batches"
     def country(self):
-        return self.order.customer.country
+        return str(self.order.customer.country)
     def __str__(self):
         return self.country() + "_" + self.batch_number
 

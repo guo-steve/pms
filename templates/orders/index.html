@@ -6,13 +6,14 @@
         <table id="order-list" class="table table-hover">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Order Number</th>
-                    <th>Quantity</th>
-                    <th>Customer</th>
-                    <th>Country</th>
-                    <th>Date</th>
+                    <th data-data="id">Id</th>
+                    <th data-data="name">Name</th>
+                    <th data-data="order_number">Order Number</th>
+                    <th data-data="quantity">Quantity</th>
+                    <th data-data="customer">Customer</th>
+                    <th data-data="country">Country</th>
+                    <th data-data="date">Date</th>
+                    <th data-data="uri">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -36,20 +37,19 @@
                     "X-CSRFToken": "{{ csrf_token }}"
                 },
             },
-            "columns": [
-                {"data": "id"},
-                {"data": "name"},
-                {"data": "order_number"},
-                {"data": "quantity"},
-                {"data": "customer"},
-                {"data": "country"},
-                {"data": "date"}
-            ],
             "columnDefs": [
+                {
+                    "targets": [-2],
+                    "render": function(data, type, row) {
+                        return (new Date(data)).toLocaleString();
+                    }
+                },
                 {
                     "targets": [-1],
                     "render": function(data, type, row) {
-                        return (new Date(data)).toLocaleString();
+                        var html = '<a href="' + row.uri + '">Detail</a>';
+                        html += ' | <a href="' + row.uri + 'data_batches">Data Batches</a>';
+                        return html;
                     }
                 }
             ]

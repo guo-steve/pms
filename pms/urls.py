@@ -24,7 +24,12 @@ urlpatterns = [
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^hello/', views.hello),
     url(r'^test/', views.test),
-    url(r'^orders/', include('orders.urls')),
+    url(r'^orders/', include('orders.orders_urls')),
+    url(r'^data_batches/', include('orders.data_batches_urls')),
+    url(r'^projects/', include('projects.projects_urls')),
+    url(r'^releases/', include('projects.releases_urls')),
+    url(r'^documents/', include('documents.urls')),
     url(r'^products/', include('products.urls')),
+    url(r'^customers/', include('customers.urls')),
     url(r'^admin/', admin.site.urls),
 ]
