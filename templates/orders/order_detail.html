@@ -2,6 +2,9 @@
 
 {% block content %}
 <div class="box">
+    <div class="box-header">
+        <h3 class="box-title">{{ title }}</h3>
+    </div>
     <div class="box-body">
         <table id="order-detail" class="table table-hover">
             <tbody>
@@ -31,7 +34,7 @@
                 </tr>
                 <tr>
                     <td><b>Original File</b></td>
-                    <td>{{ order.original_file }}</td>
+                    <td><a href="{% url 'files:download' order.original_file %}">{{ order.original_file }}</a></td>
                 </tr>
                 <tr>
                     <td><b>Updated Date</b></td>

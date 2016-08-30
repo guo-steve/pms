@@ -1,4 +1,5 @@
 {% extends "tests/base.html" %}
+{% load extras %}
 
 {% block title %}My amazing blog{% endblock %}
 
@@ -16,7 +17,17 @@
 {% endfor %}
 
 <p>
-{{ request.path }}
+request.path = {{ request.path }}
+</p>
+
+<p>
+request.path|match = {{ request.path | match:'^/\w+' }}
+</p>
+
+<p>
+request.user {{ request.user }} <br/>
+request.user.first_name {{ request.user.first_name }} <br/>
+request.user.profile.nick_name {{ request.user.profile.nick_name }}
 </p>
 
 {% endblock %}

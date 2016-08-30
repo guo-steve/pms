@@ -3,10 +3,8 @@ from django.template import Template, RequestContext
 from django.http import HttpResponse, Http404
 from django.utils import timezone
 from django.core.urlresolvers import reverse
-from django.conf import settings
-from wsgiref.util import FileWrapper
 from .models import Order, DataBatch
-import json, os
+import json
 
 def hello(request):
     if request.method == 'POST' and request.META['CONTENT_TYPE'] == 'application/json':
@@ -27,9 +25,11 @@ def orders(request):
         context = {
             'title' : 'Orders',
             'page_header' : 'Orders list',
+            'page_description': 'The list of all orders',
             'breadcrumb' : [
                 { 'label': 'Orders', 'url': reverse('orders:index') },
-            ]
+            ],
+            'box_header': 'Orders',
         }
         return render(request, 'orders/index.html', context)
 
@@ -58,7 +58,8 @@ def orders_detail(request, order_id):
         'title': 'Order Detail',
         'page_header' : 'Order detail',
         'breadcrumb': [
-            { 'label': 'Orders', 'url': '' },
+            { 'label': 'Detail', 'url': reverse('orders:detail', args=[order_id]) },
+            { 'label': 'Orders', 'url': reverse('orders:index') },
         ],
         'order': o,
     }
@@ -97,14 +98,4 @@ def data_batches_detail(request):
     }
     return render(request, 'orders/order_detail.html', context)
 
-
-def order_original_file(request, file_name):
-    file_path = os.path.join(settings.MEDIA_ROOT, reverse('orders:original_file', args=[file_name]))
-    file_wrapper = FileWrapper(file(file_path, 'rb'))
-    file_mimetype = mimetyps.guess_type(filepath)
-    response = HttpResponse(file_wrapper, content_type=file_mimetype)
-    response['X-Sendfile'] = file_path
-    response['Content-Length'] = os.stat(file_path).st_size
-    response['Content-Disposition'] = 'attachment; filename=%s' % smart_str(file_name)
-    return response
 

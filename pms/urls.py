@@ -19,7 +19,7 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index),
+    url(r'^$', views.index, name="home"),
     #url(r'^accounts/login/$', auth_views.login),
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^hello/', views.hello),
@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^documents/', include('documents.urls')),
     url(r'^products/', include('products.urls')),
     url(r'^customers/', include('customers.urls')),
+    url(r'^files/', include('files.urls')),
     url(r'^admin/', admin.site.urls),
 ]

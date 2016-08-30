@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
+import os
 
 """
 User properties:
@@ -14,7 +15,7 @@ User properties:
 
 def get_img_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/<username><ext>
-    return os.path.join(instance.user.username + os.path.splitext(filename)[1])
+    return os.path.join('accounts', instance.user.username + os.path.splitext(filename)[1].lower())
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT)
@@ -29,3 +30,7 @@ class Profile(models.Model):
     mobile = models.CharField(max_length=30, null=True, blank=True)
     designation = models.CharField(max_length=30)
     updated_date = models.DateTimeField(auto_now=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.nick_name

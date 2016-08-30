@@ -1,47 +1,77 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}ProManSys 1.0 | Log in{% endblock %}
+{% block additional_stylesheet %}
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'plugins/iCheck/square/blue.css' %}">
 
-<html lang="en-us" >
-<head>
-<title>Log in | {{ site_title | default:_("PMS V1.0") }}</title>
-<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/static/admin/css/login.css" />
-<meta name="robots" content="NONE,NOARCHIVE" />
-</head>
-<body class=" login" data-admin-utc-offset="28800">
-<!-- Container -->
-<div id="container">
-  <!-- Header -->
-  <div id="header">
-    <div id="branding">
-      <h1 id="site-name"><a href="/admin/">ProManSys v1.0</a></h1>
-    </div>
+{% endblock %}
+{% block body_class %} class="hold-transition login-page"{% endblock %}
+{% block wrapper %}
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/"><b>ProMan</b>Sys</a>
   </div>
-  <!-- END Header -->
-  <!-- Content -->
-  <div id="content" class="colM">
-    <div id="content-main">
-      <form action="?next=/" method="post" id="login-form">
-        {% csrf_token %}
-        <div class="form-row">
-          <label class="required" for="id_username">Username:</label> <input id="id_username" maxlength="254" name="username" type="text" />
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">Sign in to start your session</p>
+
+    <form action="?next=/" method="post">
+      {% csrf_token %}
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" placeholder="Username" name="username">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="Password" name="password">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox icheck">
+            <label>
+              <input type="checkbox"> Remember Me
+            </label>
+          </div>
         </div>
-        <div class="form-row">
-          <label class="required" for="id_password">Password:</label> <input id="id_password" name="password" type="password" />
-          <input type="hidden" name="next" value="/" />
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <input type="submit" class="btn btn-primary btn-block btn-flat">Sign In</input>
         </div>
-        <div class="submit-row">
-          <label>&nbsp;</label><input type="submit" value="Log in" />
-        </div>
-      </form>
-      <script type="text/javascript">
-        document.getElementById('id_username').focus()
-      </script>
+        <!-- /.col -->
+      </div>
+    </form>
+    <!--
+    <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+        Facebook</a>
+      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+        Google+</a>
     </div>
-    <br class="clear" />
+    -->
+    <!-- /.social-auth-links -->
+
+    <a href="#">I forgot my password</a><br>
+    <a href="register.html" class="text-center">Register a new membership</a>
+
   </div>
-  <!-- END Content -->
-  <div id="footer"></div>
+  <!-- /.login-box-body -->
 </div>
-<!-- END Container -->
-</body>
-</html>
+<!-- /.login-box -->
+{% endblock %}
+
+{% block additional_js %}
+<!-- iCheck -->
+<script src="{% static 'plugins/iCheck/icheck.min.js' %}"></script>
+<script>
+  $(function () {
+    $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+    });
+    $('input[name=username]').focus();
+  });
+</script>
+{% endblock %}
